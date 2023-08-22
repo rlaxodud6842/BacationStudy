@@ -3,24 +3,35 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Calculator {
-
-
     public boolean isFinished = false;
     public Operator op;
     public String formula;
 
-    public Calculator(String formula,Operator operator) {
+    public Calculator(String formula,Operator operator) throws Exception {
         this.op = operator;
         this.formula = formula;
+        if (isFormula(formula)){
+            throw new NumberFormatException();
+        }
         //객체 생성시 바로 파싱
     }
 
-    public double showResult(){
-        ArrayList parsedFormula = postfix(parsing(formula));
+    public boolean isFormula(String formula){
+        if (formula == null){
+            return false;
+        }
+        try{
+            double f = Double.parseDouble(formula);
+        }catch (NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
+
+    public double showResult(ArrayList parsedFormula){
         double result = calculating(parsedFormula);
         return result;
     }
-
     public ArrayList parsing(String Formula){
         ArrayList parsedFormula = new ArrayList();
         //공백 제거
@@ -55,7 +66,7 @@ public class Calculator {
     public ArrayList postfix(ArrayList formula){
 
         //후위 연산으로 만들어진 각각을 저장하는 리스트 생성
-        ArrayList calcFormula = new ArrayList();
+        ArrayList postfixFormula = new ArrayList();
         // 연산자를 저장하는 스택 생성
         Stack operatorStack = new Stack();
 
@@ -67,7 +78,7 @@ public class Calculator {
                     operatorStack.push(element);
                     //들어오는놈이 연산자 스택 안에있는놈보다 우선순위가 낮으면 스택 대방출// 후 추가.
                     }else if (op.operatorJudge(element) <= op.operatorJudge(operatorStack.peek().toString())){
-                            calcFormula.add(operatorStack.pop());
+                            postfixFormula.add(operatorStack.pop());
                             operatorStack.push(element);
                     }
                     else{
@@ -75,14 +86,14 @@ public class Calculator {
                     }
                 // 숫자일 경우
                 }else{
-                    calcFormula.add(element);
+                    postfixFormula.add(element);
                 }
         }
         //파싱이 끝나면 스택에 있는놈들 대방출
         while(!operatorStack.isEmpty()) {
-            calcFormula.add(operatorStack.pop());
+            postfixFormula.add(operatorStack.pop());
         }
-        return calcFormula;
+        return postfixFormula;
     }
     public double calculating(ArrayList posixArray){
         Stack calculatedFormula = new Stack();
@@ -117,9 +128,8 @@ public class Calculator {
             else{
                 calculatedFormula.push(Integer.parseInt(element));
             }
-            System.out.println(calculatedFormula);
+            //System.out.println(calculatedFormula); 디버깅시 켜기
         }
         return Double.parseDouble(calculatedFormula.pop().toString());
     }
 }
-//예외처리 디버깅 하기
