@@ -1,5 +1,6 @@
 package module;
-public class Operator {
+public class OperatorUtil {
+    //예외처리
     public int operatorJudge(String operator) {
         if (operator.equals("+")) {
             return 0;
@@ -12,10 +13,8 @@ public class Operator {
         }
         return -18461324;
     }
-    public boolean isOperator (String operator){
-        if (operator.equals("+") || operator.equals("-") || operator.equals("/") || operator.equals("*")) {
-            return true;
-        }
-        return false;
+
+    public boolean isOperator(String operator) {
+        return (operator.equals("+") || operator.equals("-") || operator.equals("/") || operator.equals("*"));
     }
 }
