@@ -17,4 +17,13 @@ public class OperatorUtil {
     public boolean isOperator(String operator) {
         return (operator.equals("+") || operator.equals("-") || operator.equals("/") || operator.equals("*"));
     }
+
+    public int isbraket(String braket){
+        if (braket.equals("(")){
+           return 1;
+        }else if(braket.equals(")")){
+            return 2;
+        }
+        return -452564;
+    }
 }

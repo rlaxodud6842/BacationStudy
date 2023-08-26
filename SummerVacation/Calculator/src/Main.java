@@ -11,7 +11,6 @@ public class Main {
             System.out.println("수식을 입력하세요(q 입력시 종료) : ");
             String formula = sc.nextLine();
             OperatorUtil op = new OperatorUtil();
-
             Calculator calc = new Calculator(formula,op);
 
             ArrayList parsedFormula = calc.postfix(calc.parsing(calc.formula));
